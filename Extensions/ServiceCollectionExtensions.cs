@@ -49,7 +49,11 @@ namespace BackEnd.Extensions
             {
                 options.AddPolicy("AllowFrontend", builder =>
                 {
-                    builder.WithOrigins("http://127.0.0.1:5500")
+                    builder.WithOrigins(
+                            "http://127.0.0.1:5500",
+                            "https://chatroom-frontend-uc36.onrender.com"
+
+                        )
                            .AllowAnyMethod()
                            .AllowAnyHeader()
                            .AllowCredentials();
