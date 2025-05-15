@@ -61,7 +61,7 @@ namespace BackEnd.Controllers
                     });
                 }
 
-                var baseUrl = "https://chatroom-backend-jjoi.onrender.com";
+                var baseUrl = "https://chatroom-frontend-uc36.onrender.com";
 
                 if (data.TryGetValue("userInfo", out var userInfoObj) && userInfoObj is User userInfo)
                 {
