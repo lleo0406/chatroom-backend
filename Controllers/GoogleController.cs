@@ -65,6 +65,7 @@ namespace BackEnd.Controllers
 
                 if (data.TryGetValue("userInfo", out var userInfoObj) && userInfoObj is User userInfo)
                 {
+                    Console.WriteLine("userPassword=>  " + string.IsNullOrEmpty(userInfo.Password));
                     if (string.IsNullOrEmpty(userInfo.Password))
                     {
                         redirectUrl = $"{baseUrl}/setPassword.html";
