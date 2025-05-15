@@ -61,19 +61,20 @@ namespace BackEnd.Controllers
                     });
                 }
 
+                var baseUrl = "https://chatroom-backend-jjoi.onrender.com";
+
                 if (data.TryGetValue("userInfo", out var userInfoObj) && userInfoObj is User userInfo)
                 {
-                    if(userInfo.Password == null)
+                    if (string.IsNullOrEmpty(userInfo.Password))
                     {
-                        redirectUrl = $"http://127.0.0.1:5500/setPassword.html";
-
+                        redirectUrl = $"{baseUrl}/setPassword.html";
                     }
                     else
                     {
-                        redirectUrl = $"http://127.0.0.1:5500/profile.html";
-
+                        redirectUrl = $"{baseUrl}/profile.html";
                     }
                 }
+
 
             }
 
