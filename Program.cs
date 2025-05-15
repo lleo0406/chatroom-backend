@@ -40,4 +40,11 @@ app.UseHttpsRedirection();
 app.MapControllers();
 app.MapHub<ChatHub>("/chathub");
 app.MapHub<FriendNotificationHub>("/FriendNotificationHub");
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<IChatroomContext>();
+    db.Database.Migrate();
+}
+
 app.Run();
