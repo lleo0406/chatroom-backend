@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NuGet.Common;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace BackEnd.Controllers
 {
@@ -46,6 +47,7 @@ namespace BackEnd.Controllers
             var name = claims[ClaimTypes.Name];
 
             var user = await _googleService.GoogleLogin(id, email, name);
+
             var redirectUrl = string.Empty;
 
             if (user.TryGetValue("data", out var dataObj) && dataObj is Dictionary<string, object> data)
@@ -65,7 +67,6 @@ namespace BackEnd.Controllers
 
                 if (data.TryGetValue("userInfo", out var userInfoObj) && userInfoObj is User userInfo)
                 {
-                    Console.WriteLine("userPassword=>  " + string.IsNullOrEmpty(userInfo.Password));
                     if (string.IsNullOrEmpty(userInfo.Password))
                     {
                         redirectUrl = $"{baseUrl}/setPassword.html";
@@ -78,7 +79,6 @@ namespace BackEnd.Controllers
 
 
             }
-
             return Redirect(redirectUrl);
         }
 

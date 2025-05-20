@@ -35,7 +35,7 @@ namespace BackEnd.Services.GoogleService
                 var result = new Dictionary<string, object>
                 {
                     { "token", token },
-                    { "userInfo", user }
+                    { "userInfo", registerUser }
                 };
 
                 response.Add(Constants.CODE, Constants.GOOGLE_REGISTER_SUCCESS);
