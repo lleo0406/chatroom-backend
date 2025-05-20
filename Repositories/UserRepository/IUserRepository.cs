@@ -22,5 +22,6 @@ namespace BackEnd.Repositories.UserRepository
         Task<User> UpdateGoogleId(int id, string googleId);
         Task<User> RegisterGoogleAccount(string email, string displayName, string googleId);
         Task<bool> SetPassword(int id, string password);
+        Task<bool> GetPasswordById(int id);
     }
 }

@@ -22,5 +22,6 @@ namespace BackEnd.Services.UserServices
         Task<Dictionary<string, object>> VerifyForgotPasswordToken(string token);
         Task<Dictionary<string, object>> ResetPassword(string token, string newPassword);
         Task<Dictionary<string, object>> SetPassword(int id, string password);
+        Task<Dictionary<string, object>> GetPasswordById(int id);
     }
 }

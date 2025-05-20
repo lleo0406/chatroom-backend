@@ -85,6 +85,27 @@ namespace BackEnd.Services.UserServices
             return userInfo;
         }
 
+        public async Task<Dictionary<string, object>> GetPasswordById(int id)
+        {
+            var response = new Dictionary<string, object>();
+
+            var result = await _userRepository.GetPasswordById(id);
+
+            if (result)
+            {
+                response.Add(Constants.CODE, Constants.SUCCESS);
+                response.Add(Constants.MESSAGE, Constants.SUCCESS_MESSAGE);
+            }
+            else
+            {
+                response.Add(Constants.CODE, Constants.NOT_FOUND);
+                response.Add(Constants.MESSAGE, Constants.NOT_FOUND_MESSAGE);
+            }
+
+            return response;
+
+        }
+
 
         public async Task<Dictionary<string, object>> RegisterAccount(string email, string password, string displayName)
         {
@@ -241,7 +262,7 @@ namespace BackEnd.Services.UserServices
 
                 var passwordResetToken = await _userRepository.PasswordResetToken(resetToken, user.Id);
 
-                var resetLink = $"http://127.0.0.1:5500/resetPassword.html?token={resetToken}";
+                var resetLink = $"https://chatroom-backend-jjoi.onrender.com/resetPassword.html?token={resetToken}";
                 var emailSubject = "ChatRoom密碼重設連結";
                 var emailBody = $"請點擊以下連結來重設您的密碼：<br/><a href=\"{resetLink}\">{resetLink}</a><br/><p>請在15分鐘內完成重設密碼。</p>";
 

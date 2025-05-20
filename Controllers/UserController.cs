@@ -261,5 +261,20 @@ namespace BackEnd.Controllers
             return Ok(result);
         }
 
+        [HttpGet("alreadySetPs")]
+        public async Task<IActionResult> AlreadySetPs()
+        {
+            var response = new Dictionary<string, object>();
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized("系統異常，請稍後再試");
+            }
+            var result = await _userService.GetPasswordById(int.Parse(userId));
+
+            return Ok(result);
+        }
+
     }
 }

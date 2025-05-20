@@ -33,6 +33,17 @@ namespace BackEnd.Repositories.UserRepository
             return userDto;
         }
 
+        public async Task<bool> GetPasswordById(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if ( user.Password != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public Task<User?> GetUserByDisplayId(string displayId)
         {
             return _context.Users.FirstOrDefaultAsync(u => u.DisplayId == displayId);
