@@ -212,7 +212,7 @@ namespace BackEnd.Controllers
                 return BadRequest("未上傳檔案");
             }
 
-            var photoPath  = await _imageService.SaveWebpAsync(avatar, "uploads/avatars", "/uploads/avatars/f2dda304-3531-4cb1-9883-2b2d97af41c1.webp");
+            var photoPath  = await _imageService.UploadImageAsync(avatar);
 
             var result = await _userService.UpdateAvatar(int.Parse(userId), photoPath );
 

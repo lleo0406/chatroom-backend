@@ -39,7 +39,7 @@ namespace BackEnd.Services.ChatService
 
             if (photo != null)
             {
-                photoPath = await _imageService.SaveWebpAsync(photo, "uploads/groupPhotos", "/uploads/groupPhotos/cb20712c-8eaa-4b7d-84aa-ccf73c4098ee.webp");
+                photoPath = await _imageService.UploadImageAsync(photo);
             }
 
 

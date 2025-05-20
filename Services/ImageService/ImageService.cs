@@ -1,29 +1,57 @@
 ﻿
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using SixLabors.ImageSharp.Formats.Webp;
 
 namespace BackEnd.Services.ImageService
 {
     public class ImageService : IImageService
     {
-        public async Task<string> SaveWebpAsync(IFormFile file, string folderPath, string defaultPath)
+        private readonly Cloudinary _cloudinary;
+
+        public ImageService(IConfiguration config)
+        {
+            var account = new Account(
+                config["Cloudinary:CloudName"],
+                config["Cloudinary:ApiKey"],
+                config["Cloudinary:ApiSecret"]);
+
+            _cloudinary = new Cloudinary(account);
+        }
+
+        public async Task<string> UploadImageAsync(IFormFile file)
+        {
+            var webpStream = await ConvertToWebpStreamAsync(file);
+            if (webpStream == null) return null;
+
+            webpStream.Position = 0;
+
+            var uploadParams = new ImageUploadParams
+            {
+                File = new FileDescription(file.FileName, webpStream),
+                Folder = "avatars",
+                Format = "webp"
+            };
+
+            var result = await _cloudinary.UploadAsync(uploadParams);
+            return result.SecureUrl.ToString();
+        }
+
+        private async Task<MemoryStream> ConvertToWebpStreamAsync(IFormFile file)
         {
             if (file is { Length: > 0 })
             {
-                var fileName = $"{Guid.NewGuid()}.webp";
-                var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", folderPath);
-                Directory.CreateDirectory(absolutePath);
-
-                var filePath = Path.Combine(absolutePath, fileName);
-
                 using var image = await Image.LoadAsync(file.OpenReadStream());
 
+                var outputStream = new MemoryStream();
                 var encoder = new WebpEncoder { Quality = 75 };
-                await image.SaveAsync(filePath, encoder);
+                await image.SaveAsync(outputStream, encoder);
 
-                return Path.Combine("/", folderPath, fileName).Replace("\\", "/");
+                outputStream.Position = 0;
+                return outputStream;
             }
 
-            return Path.Combine("/", folderPath, defaultPath).Replace("\\", "/");
+            return null;
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IImageService
     {
-        Task<string> SaveWebpAsync(IFormFile file, string folderPath, string defaultPath);
+        Task<string> UploadImageAsync(IFormFile file);
     }
 }
