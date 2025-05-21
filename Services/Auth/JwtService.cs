@@ -33,6 +33,7 @@ namespace BackEnd.Services.Auth
 
             // 使用 HmacSha256 演算法建立簽章憑證
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
             // 建立 JWT Token 物件，設定發行者、受眾、有效期限與簽章等資訊
             var token = new JwtSecurityToken(
                 issuer: jwtSettings["Issuer"],                         // Token 發行者

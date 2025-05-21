@@ -31,18 +31,7 @@ namespace BackEnd.Hubs
             if (IsPrivateOrNotActivation)
             {
                 var user = await _messagesService.ChangeActiveStatus(message.ChatRoomId, senderId);
-                Console.WriteLine("user=>" + user);
-                await Clients.Group(user.Id.ToString()).SendAsync("createChat", new
-                {
-                    chatRoomId = message.ChatRoomId,
-                    senderId,
-                    senderName = result.SenderName,
-                    senderPicture = result.SenderPicture,
-                    message = message.Message,
-                    fileUrl = result.FileUrl,
-                    messageType = result.MessageType,
-                    sendAt = result.SendAt,
-                });
+                await Clients.Group(user.Id.ToString()).SendAsync("createChat", null);
             }
 
             await Clients.Group(message.ChatRoomId.ToString()).SendAsync("ReceiveMessage", new
@@ -59,14 +48,14 @@ namespace BackEnd.Hubs
 
         }
 
-        public async Task JoinRoom(int chatRoomId)
+        public async Task JoinRoom(int id)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, chatRoomId.ToString());
+            await Groups.AddToGroupAsync(Context.ConnectionId, id.ToString());
         }
 
-        public async Task LeaveRoom(int chatRoomId)
+        public async Task LeaveRoom(int id)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, chatRoomId.ToString());
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, id.ToString());
         }
 
     }

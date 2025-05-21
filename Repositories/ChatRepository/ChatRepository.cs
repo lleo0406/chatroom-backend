@@ -67,7 +67,7 @@ namespace BackEnd.Repositories.ChatRepository
                  .Distinct()     
                  .Select(id => new ChatRoomMembers { UserId = id ,Activation = ActivationStatus.Activated })
                  .ToList()
-                    };
+            };
 
             _context.ChatRoom.Add(newChatRoom);
             await _context.SaveChangesAsync();

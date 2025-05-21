@@ -35,13 +35,11 @@ namespace BackEnd.Services.ChatService
         {
             var response = new Dictionary<string, object>();
             var photoPath = string.Empty;
-            Console.WriteLine(photo != null);
 
             if (photo != null)
             {
                 photoPath = await _imageService.UploadImageAsync(photo);
             }
-
 
             await _chatRepository.CreateGroup(userId, name, photoPath, members);
 
