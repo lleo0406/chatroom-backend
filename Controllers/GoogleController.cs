@@ -64,6 +64,7 @@ namespace BackEnd.Controllers
                 }
 
                 var baseUrl = "https://chatroom-frontend-uc36.onrender.com";
+                //var baseUrl = "http://127.0.0.1:5500";
 
                 if (data.TryGetValue("userInfo", out var userInfoObj) && userInfoObj is User userInfo)
                 {
