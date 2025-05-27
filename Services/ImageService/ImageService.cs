@@ -9,14 +9,9 @@ namespace BackEnd.Services.ImageService
     {
         private readonly Cloudinary _cloudinary;
 
-        public ImageService(IConfiguration config)
+        public ImageService(Cloudinary cloudinary)
         {
-            var account = new Account(
-                config["Cloudinary:CloudName"],
-                config["Cloudinary:ApiKey"],
-                config["Cloudinary:ApiSecret"]);
-
-            _cloudinary = new Cloudinary(account);
+            _cloudinary = cloudinary;
         }
 
         public async Task<string> UploadImageAsync(IFormFile file)

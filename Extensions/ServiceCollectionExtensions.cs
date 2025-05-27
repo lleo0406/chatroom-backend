@@ -11,9 +11,11 @@ using BackEnd.Services.GoogleService;
 using BackEnd.Services.ImageService;
 using BackEnd.Services.MessagesService;
 using BackEnd.Services.UserServices;
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.DotNet.Scaffolding.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -39,6 +41,15 @@ namespace BackEnd.Extensions
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IGoogleService, GoogleService>();
+            services.AddSingleton(provider =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+                var account = new Account(
+                    config["Cloudinary:CloudName"],
+                    config["Cloudinary:ApiKey"],
+                    config["Cloudinary:ApiSecret"]);
+                return new Cloudinary(account);
+            });
 
             return services;
         }
